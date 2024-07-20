@@ -38,13 +38,15 @@ ALLOWED_HOSTS = ["*"]
 
 
 # CSRF
-# CSRF_TRUSTED_ORIGINS = ["*"]
+if IN_PRODUCTION:
+    CSRF_TRUSTED_ORIGINS = ["*"]
 
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 
-# CORS_ALLOWED_ORIGINS = ["*"]
+if IN_PRODUCTION:
+    CORS_ALLOWED_ORIGINS = ["*"]
 
 
 # Application definition
@@ -55,13 +57,20 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
-    "django.contrib.sessions",
+    "django.contrib.humanize",
     "django.contrib.messages",
+    "django.contrib.sessions",
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
     "django_filters",
     "guardian",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.headless",
+    "allauth.usersessions",
 ]
 
 MIDDLEWARE = [
@@ -74,6 +83,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    "allauth.usersessions.middleware.UserSessionsMiddleware",
 ]
 
 ROOT_URLCONF = "fastcord.urls"
@@ -93,6 +104,33 @@ TEMPLATES = [
         },
     },
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
+        },
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "OAUTH_PKCE_ENABLED": True,
+        "FETCH_USERINFO": True,
+    }
+}
+
+HEADLESS_ONLY = False
+
+HEADLESS_FRONTEND_URLS = {
+    "account_confirm_email": "/accounts/verify-email/{key}",
+    "account_reset_password": "/account/password/reset",
+    "account_reset_password_from_key": "/account/password/reset/key/{key}",
+    "account_signup": "/account/signup",
+    "socialaccount_login_error": "/account/provider/callback",
+}
+
+USERSESSIONS_TRACK_ACTIVITY = True
 
 WSGI_APPLICATION = "fastcord.wsgi.application"
 
@@ -130,6 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "guardian.backends.ObjectPermissionBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 

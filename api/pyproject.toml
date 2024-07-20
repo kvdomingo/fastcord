@@ -25,6 +25,10 @@ asyncpg = "^0.29.0"
 dj-database-url = "^2.2.0"
 whitenoise = {extras = ["brotli"], version = "^6.7.0"}
 channels = {extras = ["daphne"], version = "^4.1.0"}
+requests = "^2.32.3"
+requests-oauthlib = "^2.0.0"
+pyjwt = "^2.8.0"
+django-allauth = {extras = ["socialaccount"], version = "^0.63.6"}
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.3"
