@@ -29,6 +29,8 @@ requests = "^2.32.3"
 requests-oauthlib = "^2.0.0"
 pyjwt = "^2.8.0"
 django-allauth = {extras = ["socialaccount"], version = "^0.63.6"}
+cuid2 = "^2.0.1"
+pillow = "^10.4.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.3"
