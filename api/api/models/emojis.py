@@ -10,3 +10,6 @@ class Emoji(BaseModel):
     author = m.ForeignKey(
         "UserProfile", related_name="emojis", on_delete=m.SET_NULL, null=True
     )
+
+    class Meta:
+        ordering = ["guild", "-created"]

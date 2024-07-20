@@ -9,3 +9,6 @@ class Message(BaseModel):
         "UserProfile", related_name="messages", on_delete=m.SET_NULL, null=True
     )
     channel = m.ForeignKey("Channel", related_name="messages", on_delete=m.CASCADE)
+
+    class Meta:
+        ordering = ["-created"]

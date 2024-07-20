@@ -8,6 +8,7 @@ from api.views import (
     EmojiViewSet,
     GuildViewSet,
     MessageViewSet,
+    UserGuildOrderViewSet,
     UserProfileViewSet,
 )
 
@@ -18,6 +19,7 @@ router.register("emojis", EmojiViewSet)
 router.register("guilds", GuildViewSet)
 router.register("messages", MessageViewSet)
 router.register("profiles", UserProfileViewSet)
+router.register("user-guilds", UserGuildOrderViewSet)
 
 urlpatterns = [
     path("health", lambda r: HttpResponse(b"ok")),

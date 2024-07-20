@@ -2,7 +2,7 @@ from .channels import ChannelGroupSerializer, ChannelSerializer
 from .emojis import EmojiSerializer
 from .guilds import GuildSerializer
 from .messages import MessageSerializer
-from .users import UserProfileSerializer
+from .users import UserGuildOrderSerializer, UserProfileSerializer
 
 __all__ = [
     "ChannelSerializer",
@@ -11,4 +11,5 @@ __all__ = [
     "GuildSerializer",
     "MessageSerializer",
     "UserProfileSerializer",
+    "UserGuildOrderSerializer",
 ]

@@ -675,6 +675,17 @@ files = [
 Django = ">=2.2"
 
 [[package]]
+name = "django-ordered-model"
+version = "3.7.4"
+description = "Allows Django models to be ordered and provides a simple admin interface for reordering them."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-ordered-model-3.7.4.tar.gz", hash = "sha256:f258b9762525c00a53009e82f8b8bf2a3aa315e8b453e281e8fdbbfe2b8cb3ba"},
+    {file = "django_ordered_model-3.7.4-py3-none-any.whl", hash = "sha256:dfcd3183fe0749dad1c9971cba1d6240ce7328742a30ddc92feca41107bb241d"},
+]
+
+[[package]]
 name = "djangorestframework"
 version = "3.15.2"
 description = "Web APIs for Django, made easy."
@@ -1746,4 +1757,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0b87442316ea17b3f3d796ea16bfc2767316b7e87294fd8ae0e0a976fb643f48"
+content-hash = "64160e5c37e6a581dc1cfbf29e86558a3630b6abc10409dfe0fd6b2ab6506c28"

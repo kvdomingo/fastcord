@@ -1,15 +1,15 @@
-from rest_framework.serializers import ModelSerializer
+from ordered_model.serializers import OrderedModelSerializer
 
 from api.models import Channel, ChannelGroup
 
 
-class ChannelGroupSerializer(ModelSerializer):
+class ChannelGroupSerializer(OrderedModelSerializer):
     class Meta:
         model = ChannelGroup
         fields = "__all__"
 
 
-class ChannelSerializer(ModelSerializer):
+class ChannelSerializer(OrderedModelSerializer):
     class Meta:
         model = Channel
         fields = "__all__"

@@ -3,7 +3,7 @@ from django.db import models as m
 
 
 def generate_cuid():
-    return Cuid(length=32)
+    return Cuid(length=32).generate()
 
 
 class BaseModel(m.Model):

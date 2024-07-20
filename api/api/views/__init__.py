@@ -2,7 +2,7 @@ from .channels import ChannelGroupViewSet, ChannelViewSet
 from .emojis import EmojiViewSet
 from .guilds import GuildViewSet
 from .messages import MessageViewSet
-from .users import UserProfileViewSet
+from .users import UserGuildOrderViewSet, UserProfileViewSet
 
 __all__ = [
     "ChannelViewSet",
@@ -11,4 +11,5 @@ __all__ = [
     "GuildViewSet",
     "MessageViewSet",
     "UserProfileViewSet",
+    "UserGuildOrderViewSet",
 ]
