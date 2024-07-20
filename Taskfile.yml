@@ -1,0 +1,47 @@
+version: '3'
+
+env:
+  NAME: fastcord
+
+vars:
+  COMMIT_SHA:
+    sh: git rev-parse --short HEAD
+
+dotenv:
+  - ./api/.env
+
+tasks:
+  default:
+    desc: Build and start containers
+    cmds:
+      - docker compose -p {{.NAME}} -f docker-compose.yml up -d --build --remove-orphans {{.CLI_ARGS}}
+
+  psql:
+    desc: Access postgres cli
+    cmds:
+      - docker compose -p {{.NAME}} -f docker-compose.yml exec -- postgres psql -U $POSTGRESQL_USERNAME -d $POSTGRESQL_DATABASE
+
+  exec:
+    desc: Execute command in specified container
+    cmds:
+      - docker compose -p {{.NAME}} -f docker-compose.yml  exec -- {{.CLI_ARGS}}
+
+  restart:
+    desc: Restart all containers
+    cmds:
+      - docker compose -p {{.NAME}} -f docker-compose.yml restart {{.CLI_ARGS}}
+
+  logs:
+    desc: Show Docker logs
+    cmds:
+      - docker compose -p {{.NAME}} -f docker-compose.yml logs --follow {{.CLI_ARGS}}
+
+  stop:
+    desc: Stop all containers
+    cmds:
+      - docker compose -p {{.NAME}} -f docker-compose.yml stop {{.CLI_ARGS}}
+
+  clean:
+    desc: Stop and remove all containers
+    cmds:
+      - docker compose -p {{.NAME}} -f docker-compose.yml down -v --remove-orphans
