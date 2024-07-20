@@ -18,6 +18,9 @@ class UserProfile(BaseModel):
         default=AvailabilityStatus.ONLINE,
     )
 
+    def __str__(self):
+        return f"{self.user.username}#{self.discriminator:04}"
+
     class Meta:
         ordering = ["user__username"]
         unique_together = ["user", "discriminator"]

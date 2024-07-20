@@ -12,6 +12,9 @@ class ChannelGroup(OrderedModel, BaseModel):
 
     order_with_respect_to = "guild"
 
+    def __str__(self):
+        return f"{self.guild.name} / {self.name}"
+
     class Meta:
         ordering = ["guild", "order"]
 
@@ -31,6 +34,9 @@ class Channel(OrderedModel, BaseModel):
     )
 
     order_with_respect_to = "group"
+
+    def __str__(self):
+        return f"{self.guild.name} / {self.group.name} / {self.name}"
 
     class Meta:
         ordering = ["guild", "group", "order"]
