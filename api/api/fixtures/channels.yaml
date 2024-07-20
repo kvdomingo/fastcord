@@ -1,0 +1,18 @@
+- model: api.channel
+  pk: kxw2m890a7109tn10ihpf2gsl8arvfgi
+  fields:
+    created: 2024-07-01T00:00:00Z
+    modified: 2024-07-01T00:00:00Z
+    name: general
+    order: 1
+    guild: djca0024yphn1xjj4pzb5ci9195fzfiv
+    group: null
+- model: api.channel
+  pk: wgn45vr94d3zz0bxp2hq3wvajra7x9zy
+  fields:
+    created: 2024-07-01T00:00:00Z
+    modified: 2024-07-01T00:00:00Z
+    name: general
+    order: 1
+    guild: qd6y9zts9dt94gsxnezfduxvddw2zjq3
+    group: null
