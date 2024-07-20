@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "guardian",
+    "drf_spectacular",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -180,6 +181,14 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
     ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Fastcord API",
+    "VERSION": "0.2.0",
+    "SERVE_INCLUDE_SCHEMA": True,
 }
 
 
