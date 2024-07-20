@@ -12,22 +12,25 @@
   "dependencies": {
     "@tanstack/react-query": "^5.51.11",
     "@tanstack/react-router": "^1.45.6",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.411.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
+    "@catppuccin/tailwindcss": "^0.1.6",
     "@tanstack/react-query-devtools": "^5.51.11",
     "@tanstack/router-devtools": "^1.45.6",
     "@tanstack/router-plugin": "^1.45.3",
     "@types/node": "^20.14.11",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
