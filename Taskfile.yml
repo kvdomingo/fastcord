@@ -45,3 +45,27 @@ tasks:
     desc: Stop and remove all containers
     cmds:
       - docker compose -p {{.NAME}} -f docker-compose.yml down -v --remove-orphans
+
+  makemigrations:
+    desc: Create database migrations
+    dir: api
+    cmds:
+      - migrate create -ext sql -dir migrations -seq {{.CLI_ARGS}}
+
+  migrate:
+    desc: Apply database migrations
+    dir: api
+    cmds:
+      - migrate -source file://migrations -database pgx5://{{.POSTGRESQL_USERNAME}}:{{.POSTGRESQL_PASSWORD}}@localhost:5432/{{.POSTGRESQL_DATABASE}}?sslmode=disable up
+
+  unmigrate:
+    desc: Undo database migrations
+    dir: api
+    cmds:
+      - migrate -source file://migrations -database pgx5://{{.POSTGRESQL_USERNAME}}:{{.POSTGRESQL_PASSWORD}}@localhost:5432/{{.POSTGRESQL_DATABASE}}?sslmode=disable down
+
+  swagger:
+    desc: Generate Swagger documentation
+    dir: api
+    cmds:
+      - swag init --parseDependency --parseInternal
