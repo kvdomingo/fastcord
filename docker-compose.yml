@@ -6,9 +6,9 @@ services:
     env_file: ./api/.env
     volumes:
       - ./api:/app
-      - ./api/.venv-docker:/app/.venv
+      - venv-data:/app/.venv
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/api/ready" ]
@@ -37,11 +37,11 @@ services:
       api:
         condition: service_healthy
 
-  postgres:
+  db:
     build:
       context: .
       dockerfile: pg.Dockerfile
-    image: kvdomingo/postgresql:bitnami-16.2.0-debian-12-r16-pg_idkit-0.2.3
+    image: ghcr.io/kvdomingo/postgresql:bitnami-16.4.0-debian-12-r23-pg_idkit-0.2.3
     env_file: ./api/.env
     volumes:
       - db-data:/bitnami/postgresql
@@ -55,3 +55,4 @@ services:
 
 volumes:
   db-data:
+  venv-data:

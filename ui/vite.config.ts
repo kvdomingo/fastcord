@@ -1,28 +1,23 @@
-import path from "node:path";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
-import react from "@vitejs/plugin-react-swc";
+import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vite";
+import * as path from "node:path";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
+  plugins: [sveltekit()],
   server: {
-    port: 3000,
     host: "0.0.0.0",
+    port: 3000,
     proxy: {
       "/api": {
-        target: "http://api:8080",
-        changeOrigin: true,
+        target: "http://localhost:8000",
+        changeOrigin: false,
         secure: false,
       },
     },
   },
-  build: {
-    outDir: "build",
+  resolve: {
+    alias: {
+      $lib: path.resolve(__dirname, "./src/lib"),
+    },
   },
 });

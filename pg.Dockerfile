@@ -1,4 +1,4 @@
-FROM bitnami/postgresql:16.2.0-debian-12-r16
+FROM bitnami/postgresql:16.4.0-debian-12-r23
 
 ARG PG_IDKIT_VERSION=0.2.3
 ARG PG_IDKIT_DIR=pg_idkit-${PG_IDKIT_VERSION}
