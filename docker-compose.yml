@@ -1,9 +1,24 @@
+name: fastcord
+
+volumes:
+  db-data:
+  venv-data:
+
 services:
   api:
     build: ./api
     image: kvdomingo/fastcord-api
+    restart: unless-stopped
     init: true
-    env_file: ./api/.env
+    environment:
+      POSTGRESQL_USERNAME: postgres
+      POSTGRESQL_PASSWORD: postgres
+      POSTGRESQL_DATABASE: postgres
+      POSTGRESQL_HOST: db
+      POSTGRESQL_PORT: 5432
+      STYTCH_PROJECT_ID: ${STYTCH_PROJECT_ID}
+      STYTCH_SECRET: ${STYTCH_SECRET}
+      STYTCH_PUBLIC_TOKEN: ${STYTCH_PUBLIC_TOKEN}
     volumes:
       - ./api:/app
       - venv-data:/app/.venv
@@ -11,16 +26,17 @@ services:
       db:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/ready" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/health" ]
       interval: 20s
       start_interval: 10s
       timeout: 5s
       retries: 3
     ports:
-      - 8000:8000
+      - '8000:8000'
 
   ui:
-    image: oven/bun:1.1-alpine
+    image: oven/bun:1.2
+    restart: unless-stopped
     init: true
     environment:
       NODE_ENV: development
@@ -28,31 +44,26 @@ services:
     volumes:
       - ./ui:/app
     entrypoint:
-      - /bin/sh
-      - "-c"
-      - "bun install && exec bun run dev"
+      - /bin/bash
+      - -euxo
+      - pipefail
+      - -c
+      - bun install && exec bun run dev
     ports:
-      - 3000:3000
-    depends_on:
-      api:
-        condition: service_healthy
+      - '3000:3000'
 
   db:
-    build:
-      context: .
-      dockerfile: pg.Dockerfile
-    image: ghcr.io/kvdomingo/postgresql:bitnami-16.4.0-debian-12-r23-pg_idkit-0.2.3
-    env_file: ./api/.env
+    image: ghcr.io/kvdomingo/postgresql-pig:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - db-data:/bitnami/postgresql
+      - db-data:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "${POSTGRESQL_USERNAME}" ]
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 20s
       timeout: 5s
       retries: 3
     ports:
-      - 5432:5432
-
-volumes:
-  db-data:
-  venv-data:
+      - '5432:5432'

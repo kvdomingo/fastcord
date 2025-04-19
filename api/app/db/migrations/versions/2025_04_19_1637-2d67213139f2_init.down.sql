@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS emojis;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS user_guilds_order;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS channel_groups;
+DROP TABLE IF EXISTS channels;
+DROP TYPE IF EXISTS CHANNEL_TYPE;
+DROP TYPE IF EXISTS AVAILABILITY_STATUS;
+DROP TABLE IF EXISTS guilds;
+DROP FUNCTION IF EXISTS create_default_channels_after_guild_insert;
+DROP FUNCTION IF EXISTS update_is_edited_column;
+DROP FUNCTION IF EXISTS update_modified_column;

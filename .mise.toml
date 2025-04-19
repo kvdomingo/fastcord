@@ -1,3 +1,4 @@
 [tools]
-go = "1.22"
 bun = "latest"
+python = "sub-0.1:latest"
+uv = "latest"
