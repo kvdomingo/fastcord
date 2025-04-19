@@ -50,7 +50,7 @@ services:
       - -euxo
       - pipefail
       - -c
-      - bun install && exec bun run dev
+      - bun install && exec bun run dev --host 0.0.0.0 --port 3000
     ports:
       - '3000:3000'
 

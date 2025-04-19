@@ -1,6 +1,6 @@
+import { postsQueryOptions } from "@/utils/posts";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import { postsQueryOptions } from "../utils/posts";
 
 export const Route = createFileRoute("/posts")({
   loader: async ({ context }) => {
@@ -16,7 +16,7 @@ function PostsComponent() {
   const postsQuery = useSuspenseQuery(postsQueryOptions());
 
   return (
-    <div className="p-2 flex gap-2">
+    <div className="flex gap-2 p-2">
       <ul className="list-disc pl-4">
         {[
           ...postsQuery.data,

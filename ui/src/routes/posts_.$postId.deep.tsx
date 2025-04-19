@@ -1,6 +1,6 @@
+import { postQueryOptions } from "@/utils/posts";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { postQueryOptions } from "../utils/posts";
 import { PostErrorComponent } from "./posts.$postId";
 
 export const Route = createFileRoute("/posts_/$postId/deep")({
@@ -25,14 +25,14 @@ function PostDeepComponent() {
   const postQuery = useSuspenseQuery(postQueryOptions(postId));
 
   return (
-    <div className="p-2 space-y-2">
+    <div className="space-y-2 p-2">
       <Link
         to="/posts"
         className="block py-1 text-blue-800 hover:text-blue-600"
       >
         ← All Posts
       </Link>
-      <h4 className="text-xl font-bold underline">{postQuery.data.title}</h4>
+      <h4 className="font-bold text-xl underline">{postQuery.data.title}</h4>
       <div className="text-sm">{postQuery.data.body}</div>
     </div>
   );

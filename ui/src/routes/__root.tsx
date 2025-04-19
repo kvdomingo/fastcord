@@ -1,18 +1,17 @@
+import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary";
+import { NotFound } from "@/components/NotFound";
+import appCss from "@/styles/app.css?url";
+import { seo } from "@/utils/seo";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   HeadContent,
-  Link,
   Outlet,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import type * as React from "react";
-import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
-import { NotFound } from "~/components/NotFound";
-import appCss from "~/styles/app.css?url";
-import { seo } from "~/utils/seo";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -27,10 +26,8 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title:
-          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-        description:
-          "TanStack Start is a type-safe, client-first, full-stack React framework. ",
+        title: "Fastcord",
+        description: "Fastcord: Discord, but fast.",
       }),
     ],
     links: [
@@ -81,61 +78,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
-        <div className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: "font-bold",
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{" "}
-          <Link
-            to="/posts"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Posts
-          </Link>{" "}
-          <Link
-            to="/users"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Users
-          </Link>{" "}
-          <Link
-            to="/route-a"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Pathless Layout
-          </Link>{" "}
-          <Link
-            to="/deferred"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            Deferred
-          </Link>{" "}
-          <Link
-            // @ts-expect-error
-            to="/this-route-does-not-exist"
-            activeProps={{
-              className: "font-bold",
-            }}
-          >
-            This Route Does Not Exist
-          </Link>
-        </div>
-        <hr />
-        {children}
+      <body className="dark h-screen">
+        <main className="flex h-dvh">
+          <div className="h-full w-[60px] bg-slate-800">Guilds</div>
+          <div className="h-full w-1/4 bg-slate-700">Channels</div>
+          <div className="h-full min-w-1 bg-slate-600">{children}</div>
+          <div className="h-full w-1/4 bg-slate-500">Friends</div>
+        </main>
+
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />

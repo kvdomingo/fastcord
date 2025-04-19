@@ -1,8 +1,8 @@
+import { NotFound } from "@/components/NotFound";
+import { postQueryOptions } from "@/utils/posts";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ErrorComponent, Link, createFileRoute } from "@tanstack/react-router";
 import type { ErrorComponentProps } from "@tanstack/react-router";
-import { NotFound } from "~/components/NotFound";
-import { postQueryOptions } from "../utils/posts";
 
 export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ params: { postId }, context }) => {
@@ -34,7 +34,7 @@ function PostComponent() {
 
   return (
     <div className="space-y-2">
-      <h4 className="text-xl font-bold underline">{postQuery.data.title}</h4>
+      <h4 className="font-bold text-xl underline">{postQuery.data.title}</h4>
       <div className="text-sm">{postQuery.data.body}</div>
       <Link
         to="/posts/$postId/deep"

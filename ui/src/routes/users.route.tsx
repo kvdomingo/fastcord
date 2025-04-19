@@ -1,6 +1,6 @@
+import { usersQueryOptions } from "@/utils/users";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
-import { usersQueryOptions } from "../utils/users";
 
 export const Route = createFileRoute("/users")({
   loader: async ({ context }) => {
@@ -13,7 +13,7 @@ function UsersComponent() {
   const usersQuery = useSuspenseQuery(usersQueryOptions());
 
   return (
-    <div className="p-2 flex gap-2">
+    <div className="flex gap-2 p-2">
       <ul className="list-disc pl-4">
         {[
           ...usersQuery.data,

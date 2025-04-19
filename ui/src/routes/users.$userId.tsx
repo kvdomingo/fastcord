@@ -1,8 +1,8 @@
+import { NotFound } from "@/components/NotFound";
+import { userQueryOptions } from "@/utils/users";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ErrorComponent, createFileRoute } from "@tanstack/react-router";
 import type { ErrorComponentProps } from "@tanstack/react-router";
-import { NotFound } from "~/components/NotFound";
-import { userQueryOptions } from "~/utils/users";
 
 export const Route = createFileRoute("/users/$userId")({
   loader: async ({ context, params: { userId } }) => {
@@ -26,7 +26,7 @@ function UserComponent() {
 
   return (
     <div className="space-y-2">
-      <h4 className="text-xl font-bold underline">{user.name}</h4>
+      <h4 className="font-bold text-xl underline">{user.name}</h4>
       <div className="text-sm">{user.email}</div>
     </div>
   );
