@@ -9,6 +9,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     PYTHON_ENV: Literal["development", "production"] = "production"
     BASE_DIR: Path = Path(__file__).resolve().parent.parent
+    SECRET_KEY: str
+
+    DEFAULT_SESSION_DURATION_MINUTES: int = 60
 
     POSTGRESQL_USERNAME: str
     POSTGRESQL_PASSWORD: str
@@ -19,6 +22,7 @@ class Settings(BaseSettings):
     STYTCH_PROJECT_ID: str
     STYTCH_SECRET: str
     STYTCH_PUBLIC_TOKEN: str
+    STYTCH_ENVIRONMENT: Literal["test", "live"]
 
     @computed_field
     @property

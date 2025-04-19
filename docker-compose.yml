@@ -19,6 +19,8 @@ services:
       STYTCH_PROJECT_ID: ${STYTCH_PROJECT_ID}
       STYTCH_SECRET: ${STYTCH_SECRET}
       STYTCH_PUBLIC_TOKEN: ${STYTCH_PUBLIC_TOKEN}
+      STYTCH_ENVIRONMENT: ${STYTCH_ENVIRONMENT}
+      SECRET_KEY: ${SECRET_KEY}
     volumes:
       - ./api:/app
       - venv-data:/app/.venv

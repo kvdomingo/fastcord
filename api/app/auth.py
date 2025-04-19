@@ -9,6 +9,7 @@ from app.settings import settings
 client = stytch.Client(
     project_id=settings.STYTCH_PROJECT_ID,
     secret=settings.STYTCH_SECRET,
+    environment=settings.STYTCH_ENVIRONMENT,
 )
 
 
