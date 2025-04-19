@@ -11,7 +11,6 @@ from pathlib import Path
 from alembic import op
 import sqlalchemy as sa
 
-from app.settings import settings
 ${imports if imports else ""}
 
 MIGRATIONS_DIR = Path(__file__).resolve().parent

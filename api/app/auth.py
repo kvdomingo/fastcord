@@ -15,7 +15,7 @@ client = stytch.Client(
 
 class StytchSessionCookie(APIKeyCookie):
     async def __call__(self, request: Request):
-        if not (session := request.session.get("stytch_session_jwt")):
+        if not (session := request.session.get("stytch", {}).get("session_jwt")):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
         res = await client.sessions.authenticate_jwt_async(session_jwt=session)

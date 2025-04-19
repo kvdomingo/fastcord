@@ -3,8 +3,8 @@
 #   sqlc v1.29.0
 import datetime
 import enum
-
 import pydantic
+from typing import Optional
 
 
 class AvailabilityStatus(enum.StrEnum):
@@ -24,11 +24,11 @@ class Channel(pydantic.BaseModel):
     created: datetime.datetime
     modified: datetime.datetime
     name: str
-    guild: str
-    channel_group: str | None
+    guild_id: str
+    channel_group_id: Optional[str]
     type: ChannelType
     is_general: bool
-    order: int | None
+    order: Optional[int]
 
 
 class ChannelGroup(pydantic.BaseModel):
@@ -36,7 +36,7 @@ class ChannelGroup(pydantic.BaseModel):
     created: datetime.datetime
     modified: datetime.datetime
     name: str
-    guild: str
+    guild_id: str
     order: int
 
 
@@ -46,8 +46,8 @@ class Emoji(pydantic.BaseModel):
     modified: datetime.datetime
     name: str
     source: str
-    guild: str
-    author: str | None
+    guild_id: str
+    author_id: Optional[str]
 
 
 class Guild(pydantic.BaseModel):
@@ -55,16 +55,17 @@ class Guild(pydantic.BaseModel):
     created: datetime.datetime
     modified: datetime.datetime
     name: str
-    avatar: str | None
-    banner: str | None
+    avatar: Optional[str]
+    banner: Optional[str]
+    owner_id: str
 
 
 class Message(pydantic.BaseModel):
     id: str
     created: datetime.datetime
     modified: datetime.datetime
-    author: str | None
-    channel: str
+    author_id: Optional[str]
+    channel_id: str
     content: str
     is_edited: bool
 
@@ -77,12 +78,12 @@ class User(pydantic.BaseModel):
     discriminator: int
     full_username: str
     email: str
-    avatar: str | None
-    cover: str | None
+    avatar: Optional[str]
+    cover: Optional[str]
     availability_status: AvailabilityStatus
 
 
 class UserGuildsOrder(pydantic.BaseModel):
-    user: str
-    guild: str
+    user_id: str
+    guild_id: str
     order: int

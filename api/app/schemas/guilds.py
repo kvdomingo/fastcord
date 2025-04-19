@@ -1,6 +1,6 @@
-from fastapi import HTTPException
-from pydantic import BaseModel, Field, model_validator
-from starlette import status
+from pydantic import BaseModel, Field
+
+from app.schemas.validators import UpdateValidatorMixin
 
 
 class CreateGuildSchema(BaseModel):
@@ -9,17 +9,7 @@ class CreateGuildSchema(BaseModel):
     banner: str | None = Field(None)
 
 
-class UpdateGuildSchema(BaseModel):
+class UpdateGuildSchema(BaseModel, UpdateValidatorMixin):
     name: str | None = Field(None)
     avatar: str | None = Field(None)
     banner: str | None = Field(None)
-
-    @model_validator(mode="before")
-    def non_empty_body_validation(cls, data):
-        if isinstance(data, dict):
-            if not any(data.values()):
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="At least one field must be provided.",
-                )
-        return data

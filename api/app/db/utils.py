@@ -1,13 +1,11 @@
 from contextlib import asynccontextmanager, contextmanager
 
-from fastapi import Depends
 from loguru import logger
 from sqlalchemy import create_engine
 from sqlalchemy.exc import DatabaseError
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+from sqlalchemy.orm import sessionmaker
 
-from app.db.generated.guilds import AsyncQuerier, Querier
 from app.settings import settings
 
 async_engine = create_async_engine(
@@ -61,11 +59,3 @@ async def get_db_async():
 
 get_db_context_sync = contextmanager(get_db_sync)
 get_db_context_async = asynccontextmanager(get_db_async)
-
-
-def get_querier(conn: Session = Depends(get_db_sync)):
-    return Querier(conn)
-
-
-async def get_async_querier(conn: AsyncSession = Depends(get_db_async)):
-    return AsyncQuerier(conn)

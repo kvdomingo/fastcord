@@ -2,7 +2,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import PostgresDsn, computed_field
+from pydantic import AnyHttpUrl, PostgresDsn, computed_field
 from pydantic_settings import BaseSettings
 
 
@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     SECRET_KEY: str
 
     DEFAULT_SESSION_DURATION_MINUTES: int = 60
+    APP_HOST: AnyHttpUrl
+    API_HOST: AnyHttpUrl
 
     POSTGRESQL_USERNAME: str
     POSTGRESQL_PASSWORD: str

@@ -2,21 +2,22 @@
 # versions:
 #   sqlc v1.29.0
 # source: guilds.sql
-from collections.abc import AsyncIterator, Iterator
+from typing import AsyncIterator, Iterator, Optional
 
 import sqlalchemy
 import sqlalchemy.ext.asyncio
 
 from app.db.generated import models
 
+
 CREATE_GUILD = """-- name: create_guild \\:one
 INSERT INTO guilds (
-    name, avatar, banner
+    name, avatar, banner, owner_id
 )
 VALUES (
-           :p1, :p2, :p3
+           :p1, :p2, :p3, :p4
        )
-RETURNING id, created, modified, name, avatar, banner
+RETURNING id, created, modified, name, avatar, banner, owner_id
 """
 
 
@@ -29,14 +30,14 @@ RETURNING id
 
 
 RETRIEVE_GUILD = """-- name: retrieve_guild \\:one
-SELECT id, created, modified, name, avatar, banner
+SELECT id, created, modified, name, avatar, banner, owner_id
 FROM guilds
 WHERE id = :p1
 """
 
 
 RETRIEVE_GUILDS = """-- name: retrieve_guilds \\:many
-SELECT id, created, modified, name, avatar, banner
+SELECT id, created, modified, name, avatar, banner, owner_id
 FROM guilds
 """
 
@@ -47,7 +48,7 @@ SET name   = COALESCE(:p1, name),
     avatar = COALESCE(:p2, avatar),
     banner = COALESCE(:p3, banner)
 WHERE id = :p4
-RETURNING id, created, modified, name, avatar, banner
+RETURNING id, created, modified, name, avatar, banner, owner_id
 """
 
 
@@ -56,10 +57,16 @@ class Querier:
         self._conn = conn
 
     def create_guild(
-        self, *, name: str, avatar: str | None, banner: str | None
-    ) -> models.Guild | None:
+        self, *, name: str, avatar: Optional[str], banner: Optional[str], owner_id: str
+    ) -> Optional[models.Guild]:
         row = self._conn.execute(
-            sqlalchemy.text(CREATE_GUILD), {"p1": name, "p2": avatar, "p3": banner}
+            sqlalchemy.text(CREATE_GUILD),
+            {
+                "p1": name,
+                "p2": avatar,
+                "p3": banner,
+                "p4": owner_id,
+            },
         ).first()
         if row is None:
             return None
@@ -70,15 +77,16 @@ class Querier:
             name=row[3],
             avatar=row[4],
             banner=row[5],
+            owner_id=row[6],
         )
 
-    def delete_guild(self, *, id: str) -> str | None:
+    def delete_guild(self, *, id: str) -> Optional[str]:
         row = self._conn.execute(sqlalchemy.text(DELETE_GUILD), {"p1": id}).first()
         if row is None:
             return None
         return row[0]
 
-    def retrieve_guild(self, *, id: str) -> models.Guild | None:
+    def retrieve_guild(self, *, id: str) -> Optional[models.Guild]:
         row = self._conn.execute(sqlalchemy.text(RETRIEVE_GUILD), {"p1": id}).first()
         if row is None:
             return None
@@ -89,6 +97,7 @@ class Querier:
             name=row[3],
             avatar=row[4],
             banner=row[5],
+            owner_id=row[6],
         )
 
     def retrieve_guilds(self) -> Iterator[models.Guild]:
@@ -101,11 +110,17 @@ class Querier:
                 name=row[3],
                 avatar=row[4],
                 banner=row[5],
+                owner_id=row[6],
             )
 
     def update_guild(
-        self, *, name: str | None, avatar: str | None, banner: str | None, id: str
-    ) -> models.Guild | None:
+        self,
+        *,
+        name: Optional[str],
+        avatar: Optional[str],
+        banner: Optional[str],
+        id: str,
+    ) -> Optional[models.Guild]:
         row = self._conn.execute(
             sqlalchemy.text(UPDATE_GUILD),
             {
@@ -124,6 +139,7 @@ class Querier:
             name=row[3],
             avatar=row[4],
             banner=row[5],
+            owner_id=row[6],
         )
 
 
@@ -132,11 +148,17 @@ class AsyncQuerier:
         self._conn = conn
 
     async def create_guild(
-        self, *, name: str, avatar: str | None, banner: str | None
-    ) -> models.Guild | None:
+        self, *, name: str, avatar: Optional[str], banner: Optional[str], owner_id: str
+    ) -> Optional[models.Guild]:
         row = (
             await self._conn.execute(
-                sqlalchemy.text(CREATE_GUILD), {"p1": name, "p2": avatar, "p3": banner}
+                sqlalchemy.text(CREATE_GUILD),
+                {
+                    "p1": name,
+                    "p2": avatar,
+                    "p3": banner,
+                    "p4": owner_id,
+                },
             )
         ).first()
         if row is None:
@@ -148,9 +170,10 @@ class AsyncQuerier:
             name=row[3],
             avatar=row[4],
             banner=row[5],
+            owner_id=row[6],
         )
 
-    async def delete_guild(self, *, id: str) -> str | None:
+    async def delete_guild(self, *, id: str) -> Optional[str]:
         row = (
             await self._conn.execute(sqlalchemy.text(DELETE_GUILD), {"p1": id})
         ).first()
@@ -158,7 +181,7 @@ class AsyncQuerier:
             return None
         return row[0]
 
-    async def retrieve_guild(self, *, id: str) -> models.Guild | None:
+    async def retrieve_guild(self, *, id: str) -> Optional[models.Guild]:
         row = (
             await self._conn.execute(sqlalchemy.text(RETRIEVE_GUILD), {"p1": id})
         ).first()
@@ -171,6 +194,7 @@ class AsyncQuerier:
             name=row[3],
             avatar=row[4],
             banner=row[5],
+            owner_id=row[6],
         )
 
     async def retrieve_guilds(self) -> AsyncIterator[models.Guild]:
@@ -183,11 +207,17 @@ class AsyncQuerier:
                 name=row[3],
                 avatar=row[4],
                 banner=row[5],
+                owner_id=row[6],
             )
 
     async def update_guild(
-        self, *, name: str | None, avatar: str | None, banner: str | None, id: str
-    ) -> models.Guild | None:
+        self,
+        *,
+        name: Optional[str],
+        avatar: Optional[str],
+        banner: Optional[str],
+        id: str,
+    ) -> Optional[models.Guild]:
         row = (
             await self._conn.execute(
                 sqlalchemy.text(UPDATE_GUILD),
@@ -208,4 +238,5 @@ class AsyncQuerier:
             name=row[3],
             avatar=row[4],
             banner=row[5],
+            owner_id=row[6],
         )
